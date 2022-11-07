@@ -29,7 +29,7 @@ public class GetAccountStep {
         getAccount.requestGetAccount();
     }
     @And("^get information$")
-    public void getInformation(){
+    public void getInformation() throws Exception{
         getAccount.validationOfToken();
     }
     @And("get invalid message")

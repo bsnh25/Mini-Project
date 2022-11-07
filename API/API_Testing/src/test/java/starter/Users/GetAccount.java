@@ -1,17 +1,29 @@
 package starter.Users;
 
-import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.serenitybdd.rest.SerenityRest;
 
 import static net.serenitybdd.rest.SerenityRest.*;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 public class GetAccount {
 
-    private static String url,content, validToken, invalidToken, nullToken;
+    private static String url, validToken, invalidToken, nullToken, content;
+//    private static String content = {\"data"+":"+"{" +
+//            "\"ID\":\"109\"," +
+//            "\"Fullname\":\"Bayu\"," +
+//            "\"Email\":\"bayuseptyan43@gmail.com\"," +
+//            "\"Password\":\"mobil-mobilan \"\","+"}}";
 
+//    public void getID() {
+//        Response response = SerenityRest.lastResponse();
+//        Integer id = response.body().path("[0].data");
+//        try (FileWriter file = new FileWriter("src//test//resources//filejson//infoAccount.json")) {
+//            file.write(id);
+//            file.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     public void setUrlAndValidToken() {
         url = "https://alta-shop.herokuapp.com/api/auth/info";
         validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsbmFtZSI6IkJheXUiLCJFbWFpbCI6ImJheXVzZXB0eWFuNDNAZ21haWwuY29tIn0.a0gMWUgpOlTv-_7pu9PThdDrZVoKhT14Q4sYkcuH95w";
@@ -25,13 +37,12 @@ public class GetAccount {
         nullToken = "";
     }
 
-    public static void requestGetAccount(){
+    public void requestGetAccount() {
         given().header("accept", "*/*")
                 .header("Content-Type","application/json")
                 .header("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsbmFtZSI6IkJheXUiLCJFbWFpbCI6ImJheXVzZXB0eWFuNDNAZ21haWwuY29tIn0.a0gMWUgpOlTv-_7pu9PThdDrZVoKhT14Q4sYkcuH95w");
         when().get(url);
-
-    }
+        }
     public static void requestWithInvalidToken(){
         given().header("accept", "application/json")
                 .header("Content-Type","application/json")
@@ -45,7 +56,7 @@ public class GetAccount {
         when().get(url);
     }
     public static void validationOfToken(){
-        then().body("Data", equalTo(content));
+        SerenityRest.then().body(containsString("data"));
     }
     public static void validationOfInvalid(){
         then().body("error", equalTo("token contains an invalid number of segments"));
@@ -53,15 +64,4 @@ public class GetAccount {
     public static void validationOfUnauthor(){
         then().body("error", equalTo("invalid token"));
     }
-
-
-    public List<JSONObject> bodyData(){
-        List<JSONObject> body = new ArrayList<>();
-
-        JSONObject data = new JSONObject();
-        data.put("product_id", 428);
-        data.put("quantity", 2);
-
-        body.add(data);
-        return body;
 }

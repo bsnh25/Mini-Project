@@ -75,7 +75,7 @@ public class Login {
         return bodyIi;
     }
     public static void validationMessage200(){
-        then().body("true", equalTo(null));
+        then().body("data",equalTo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsbmFtZSI6IkJheXUiLCJFbWFpbCI6ImJheXVzZXB0eWFuNDNAZ21haWwuY29tIn0.a0gMWUgpOlTv-_7pu9PThdDrZVoKhT14Q4sYkcuH95w"));
     }
     public static void validateStatus400() {
         then().statusCode(400);
